@@ -48,10 +48,16 @@ export async function updateNote(req, res) {
   const { title, note, noteId } = req.body;
 
   try {
-    await pool.query(
+    const result = await pool.query(
       'UPDATE notes SET title = $1, text = $2, modifiedAt = NOW() WHERE id = $3 AND user_id = $4',
       [title, note, noteId, userIdFromToken]
     );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({
+        message: 'Note not found or does not belong to user',
+      });
+    }
 
     res.status(201).json({
       message: `Updated title: ${title} , for userid: ${userIdFromToken}`,
