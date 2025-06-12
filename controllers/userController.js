@@ -29,8 +29,6 @@ export async function signup(req, res) {
   try {
     const hashPassword = await bcrypt.hash(password, 10);
 
-    // const id = uuidv4();
-
     // Spara i db
     await pool.query('INSERT INTO users (username, password) VALUES ($1, $2)', [
       username,
