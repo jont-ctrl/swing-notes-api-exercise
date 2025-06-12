@@ -117,8 +117,8 @@ export async function searchNotes(req, res) {
 
   try {
     const result = await pool.query(
-      'SELECT * FROM notes WHERE title = $1 AND user_id = $2',
-      [searchTitle, userIdFromToken]
+      'SELECT * FROM notes WHERE title ILIKE $1 AND user_id = $2',
+      [`%${searchTitle}%`, userIdFromToken]
     );
 
     if (result.rowCount === 0) {
