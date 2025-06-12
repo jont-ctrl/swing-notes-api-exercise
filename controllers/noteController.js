@@ -61,3 +61,23 @@ export async function updateNote(req, res) {
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+
+export async function deleteNote(req, res) {
+  const userIdFromToken = req.user.userId;
+
+  const { noteId } = req.body;
+
+  try {
+    await pool.query('DELETE FROM notes WHERE id = $1 AND user_id = $2', [
+      noteId,
+      userIdFromToken,
+    ]);
+
+    res.status(201).json({
+      message: `Deleted note: ${noteId} , for userid: ${userIdFromToken}`,
+    });
+  } catch (error) {
+    console.error('Error deleting note', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}

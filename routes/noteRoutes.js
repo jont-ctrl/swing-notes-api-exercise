@@ -3,6 +3,7 @@ import {
   getNotes,
   createNote,
   updateNote,
+  deleteNote,
 } from '../controllers/noteController.js';
 import authenticateToken from '../middleware/auth.js';
 
@@ -20,5 +21,8 @@ router.post('/', authenticateToken, createNote);
 
 // Update note
 router.put('/', authenticateToken, updateNote);
+
+// Delete note
+router.delete('/', authenticateToken, deleteNote);
 
 export default router;
