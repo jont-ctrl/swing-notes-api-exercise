@@ -1,5 +1,9 @@
 import express from 'express';
-import { getNotes, createNote } from '../controllers/noteController.js';
+import {
+  getNotes,
+  createNote,
+  updateNote,
+} from '../controllers/noteController.js';
 import authenticateToken from '../middleware/auth.js';
 
 const router = express.Router();
@@ -13,5 +17,8 @@ router.get('/', authenticateToken, getNotes);
 
 // Create note
 router.post('/', authenticateToken, createNote);
+
+// Update note
+router.put('/', authenticateToken, updateNote);
 
 export default router;

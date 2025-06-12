@@ -41,3 +41,23 @@ export async function createNote(req, res) {
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+
+export async function updateNote(req, res) {
+  const userIdFromToken = req.user.userId;
+
+  const { title, note, noteId } = req.body;
+
+  try {
+    await pool.query(
+      'UPDATE notes SET title = $1, text = $2, modifiedAt = NOW() WHERE id = $3 AND user_id = $4',
+      [title, note, noteId, userIdFromToken]
+    );
+
+    res.status(201).json({
+      message: `Updated title: ${title} , for userid: ${userIdFromToken}`,
+    });
+  } catch (error) {
+    console.error('Error updating note', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
