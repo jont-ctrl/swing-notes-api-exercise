@@ -6,14 +6,10 @@ import { v4 as uuidv4 } from 'uuid';
 export async function getNotes(req, res) {
   const userIdFromToken = req.user.userId;
 
-  console.log('userIdFromToken', userIdFromToken);
-
   try {
     const result = await pool.query('SELECT * FROM notes WHERE user_id = $1', [
       userIdFromToken,
     ]);
-
-    console.log(result.rows);
 
     res.status(200).json(result.rows);
   } catch (error) {
