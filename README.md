@@ -1,12 +1,10 @@
-# Swing Notes API
+# 📝 Swing Notes API
 
 En RESTful CRUD-backend för hantering av anteckningar. API:et använder JWT för autentisering, bcrypt för lösenordshantering och PostgreSQL som databas. Funktioner inkluderar att skapa konton, logga in och hantera anteckningar på ett säkert sätt.
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-Projektet använder följande bibliotek:
-
-- **express** – Webbramverk för Node.js
+- **express** – Webbramverk för att bygga API:er i Node.js
 - **pg** – PostgreSQL-klient
 - **dotenv** – Hantering av env miljövariabler
 - **bcryptjs** – Hashning av lösenord
@@ -14,7 +12,7 @@ Projektet använder följande bibliotek:
 - **cors** – Hantering av CORS
 - **swagger-jsdoc** & **swagger-ui-express** – API-dokumentation med Swagger
 
-## Kom igång
+## 🚀 Kom igång
 
 1. **Konfigurera miljövariabler**  
    Skapa en `.env`-fil och ange din databas-url samt PORT och JWT_SECRET:
@@ -43,13 +41,13 @@ Projektet använder följande bibliotek:
    node db/dataBaseSetup.js
    ```
 
-## Tips
+## 💡 Tips
 
 - Kontrollera att PostgreSQL är igång innan du kör projektet.
 - Uppdatera `DATABASE_URL` med dina egna användaruppgifter och databasnamn.
 - Vid problem, kontrollera loggarna för felmeddelanden.
 
-## API-dokumentation
+## 📚 API-dokumentation
 
 | Metod  | Endpoint          | Beskrivning                                    | 🔒 Skyddad |
 | ------ | ----------------- | ---------------------------------------------- | :--------: |
