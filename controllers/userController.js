@@ -43,3 +43,49 @@ export async function signup(req, res) {
     return res.status(500).json({ message: 'Server error' });
   }
 }
+
+export async function login(req, res) {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ message: `No username or password provided` });
+  }
+
+  if (/\s/.test(username) || /\s/.test(password)) {
+    return res
+      .status(400)
+      .json({ message: `Username and password cannot contain spaces` });
+  }
+
+  try {
+    const result = await pool.query('SELECT * FROM users WHERE username = $1', [
+      username,
+    ]);
+
+    const user = result.rows[0];
+
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid credentials.' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Invalid credentials.' });
+    }
+
+    console.log(result.rows[0]);
+    console.log(isMatch);
+
+    // Create token if login success
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+    });
+
+    res.status(200).json({ message: `Login successful`, token });
+  } catch (error) {
+    console.error(error);
+  }
+}
