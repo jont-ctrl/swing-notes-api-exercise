@@ -1,8 +1,13 @@
 import express from 'express';
-import { testing } from '../controllers/testingCool.js';
+import { signup } from '../controllers/userController.js';
 
 const router = express.Router();
 
-router.get('/testing', testing);
+// router.get('/testing', testing);
+
+//---------- /api/user/ -----------
+
+//Sign up
+router.post('/signup', signup);
 
 export default router;

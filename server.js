@@ -18,7 +18,7 @@ app.use('/api/user', userRoutes);
 // app.use('/api/notes', noteRoutes);
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Hello world' });
+  res.json({ message: 'Server live' });
 });
 
 app.listen(PORT, () => {
