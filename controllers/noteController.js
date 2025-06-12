@@ -68,10 +68,16 @@ export async function deleteNote(req, res) {
   const { noteId } = req.body;
 
   try {
-    await pool.query('DELETE FROM notes WHERE id = $1 AND user_id = $2', [
-      noteId,
-      userIdFromToken,
-    ]);
+    const result = await pool.query(
+      'DELETE FROM notes WHERE id = $1 AND user_id = $2',
+      [noteId, userIdFromToken]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({
+        message: 'Note not found or does not belong to user',
+      });
+    }
 
     res.status(201).json({
       message: `Deleted note: ${noteId} , for userid: ${userIdFromToken}`,
