@@ -59,7 +59,7 @@ export async function updateNote(req, res) {
       });
     }
 
-    res.status(201).json({
+    res.status(200).json({
       message: `Updated title: ${title} , for userid: ${userIdFromToken}`,
     });
   } catch (error) {
