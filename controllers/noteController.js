@@ -27,6 +27,12 @@ export async function createNote(req, res) {
 
   const { title, note } = req.body;
 
+  if (!title || !note) {
+    return res
+      .status(400)
+      .json({ message: `Any of these: title, note not provided` });
+  }
+
   try {
     await pool.query(
       'INSERT INTO notes (user_id, title, text, createdat, modifiedat) VALUES ($1,$2,$3,NOW(),NOW())',
@@ -46,6 +52,12 @@ export async function updateNote(req, res) {
   const userIdFromToken = req.user.userId;
 
   const { title, note, noteId } = req.body;
+
+  if (!title || !note || !noteId) {
+    return res
+      .status(400)
+      .json({ message: `Any of these: title, note, noteId not provided` });
+  }
 
   try {
     const result = await pool.query(
@@ -73,6 +85,10 @@ export async function deleteNote(req, res) {
 
   const { noteId } = req.body;
 
+  if (!noteId) {
+    return res.status(400).json({ message: `No noteId provided` });
+  }
+
   try {
     const result = await pool.query(
       'DELETE FROM notes WHERE id = $1 AND user_id = $2',
@@ -85,7 +101,7 @@ export async function deleteNote(req, res) {
       });
     }
 
-    res.status(201).json({
+    res.status(200).json({
       message: `Deleted note: ${noteId} , for userid: ${userIdFromToken}`,
     });
   } catch (error) {
