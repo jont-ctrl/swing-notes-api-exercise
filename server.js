@@ -1,4 +1,5 @@
 import express from 'express';
+import { swaggerUi, swaggerSpec } from './swagger.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
@@ -15,6 +16,9 @@ app.use(cors());
 // Middleware json
 app.use(express.json());
 
+// Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use('/api/user', userRoutes);
 app.use('/api/notes', noteRoutes);
 
@@ -23,7 +27,12 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`
+    Server is running on http://localhost:${PORT}
+
+    Swagger API documentation: http://localhost:${PORT}/api-docs
+    
+    `);
 });
 
 export default app;
