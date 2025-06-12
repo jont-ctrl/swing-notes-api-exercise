@@ -1,5 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import pool from '../models/db.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function signup(req, res) {
   const { username, password } = req.body;
@@ -24,9 +26,20 @@ export async function signup(req, res) {
       .json({ message: `Password must be longer than 6 characters long.` });
   }
 
-  const hashPassword = await bcrypt.hash(password, 10);
+  try {
+    const hashPassword = await bcrypt.hash(password, 10);
 
-  res
-    .status(201)
-    .json({ message: `Användare skapad ${username} pw: ${hashPassword}` });
+    // const id = uuidv4();
+
+    // Spara i db
+    await pool.query('INSERT INTO users (username, password) VALUES ($1, $2)', [
+      username,
+      hashPassword,
+    ]);
+
+    res.status(201).json({ message: `Användare skapad ${username}` });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Server error' });
+  }
 }
