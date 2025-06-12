@@ -60,3 +60,4 @@ En RESTful CRUD-backend för hantering av anteckningar. API:et använder JWT fö
 | GET    | /api/notes/search | Sök anteckningar på titel                      |     ✅     |
 
 **🔒 Skyddad** = Kräver JWT-token (autentisering)
+Swagger-dokumentation för API finns på http://localhost:3001/api-docs när servern är live.
