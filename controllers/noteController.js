@@ -33,7 +33,9 @@ export async function createNote(req, res) {
       [userIdFromToken, title, note]
     );
 
-    res.status(201).json({ message: `Created note for: ${userIdFromToken}` });
+    res.status(201).json({
+      message: `Created note: ${title} , for userid: ${userIdFromToken}`,
+    });
   } catch (error) {
     console.error('Error creating note', error);
     res.status(500).json({ message: 'Internal server error' });
