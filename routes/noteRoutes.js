@@ -4,6 +4,7 @@ import {
   createNote,
   updateNote,
   deleteNote,
+  searchNotes,
 } from '../controllers/noteController.js';
 import authenticateToken from '../middleware/auth.js';
 
@@ -24,5 +25,8 @@ router.put('/', authenticateToken, updateNote);
 
 // Delete note
 router.delete('/', authenticateToken, deleteNote);
+
+// Search notes
+router.get('/search', authenticateToken, searchNotes);
 
 export default router;

@@ -105,3 +105,32 @@ export async function deleteNote(req, res) {
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+
+export async function searchNotes(req, res) {
+  const userIdFromToken = req.user.userId;
+
+  const { searchTitle } = req.query; // req.query inte req.body
+
+  if (!searchTitle) {
+    return res.status(400).json({ message: `No searchTitle provided` });
+  }
+
+  try {
+    const result = await pool.query(
+      'SELECT * FROM notes WHERE title = $1 AND user_id = $2',
+      [searchTitle, userIdFromToken]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({
+        message:
+          'Note not found or does not belong to user, matching search not found',
+      });
+    }
+
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error('Error searching note', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
