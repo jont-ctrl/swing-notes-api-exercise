@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 
 import userRoutes from './routes/userRoutes.js';
+import noteRoutes from './routes/noteRoutes.js';
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/user', userRoutes);
-// app.use('/api/notes', noteRoutes);
+app.use('/api/notes', noteRoutes);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Server live' });

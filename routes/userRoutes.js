@@ -3,8 +3,6 @@ import { signup, login } from '../controllers/userController.js';
 
 const router = express.Router();
 
-// router.get('/testing', testing);
-
 //---------- /api/user/ -----------
 
 //Sign up

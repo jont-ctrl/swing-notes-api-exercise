@@ -76,9 +76,6 @@ export async function login(req, res) {
       return res.status(401).json({ message: 'Invalid credentials.' });
     }
 
-    console.log(result.rows[0]);
-    console.log(isMatch);
-
     // Create token if login success
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
       expiresIn: '1h',
